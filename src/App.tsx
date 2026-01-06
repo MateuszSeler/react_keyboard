@@ -2,32 +2,32 @@ import React from 'react';
 
 type Props = {};
 type State = {
-  key: string | null;
+  pressedKey: string | null;
 };
 
 export class App extends React.Component<Props, State> {
   state: State = {
-    key: null,
+    pressedKey: null,
   };
 
-  handelKeyDown = (event: KeyboardEvent) => {
-    this.setState({ key: event.key });
+  handleKeyUp = (event: KeyboardEvent) => {
+    this.setState({ pressedKey: event.key });
   };
 
   componentDidMount(): void {
-    document.addEventListener('keydown', this.handelKeyDown);
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
   componentWillUnmount(): void {
-    document.addEventListener('keydown', this.handelKeyDown);
+    document.removeEventListener('keyup', this.handleKeyUp);
   }
 
   render() {
     return (
       <div className="App">
         <p className="App__message">
-          {this.state.key
-            ? `The last pressed key is [${this.state.key}]`
+          {this.state.pressedKey
+            ? `The last pressed key is [${this.state.pressedKey}]`
             : `Nothing was pressed yet`}
         </p>
       </div>
